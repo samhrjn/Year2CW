@@ -6,7 +6,7 @@
 
 /**
  *
- * @author Bioret13
+ * @author Bibek Khatri, Sujal Maharjan
  */
 public class Interface extends javax.swing.JFrame {
 
