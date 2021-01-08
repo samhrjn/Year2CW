@@ -593,7 +593,7 @@ public class Interface extends javax.swing.JFrame {
                                                     temp.comName + " " +
                                                     temp.prodName + ", " +
                                                     temp.warrn + " Warranty, " +
-                                                    temp.homeDel + " for HomeDelevery, Price: " +
+                                                    temp.homeDel + " for Home Delivery, Price: " +
                                                     temp.price, "Search Results", 1);
         }
     }
@@ -624,6 +624,11 @@ public class Interface extends javax.swing.JFrame {
         }
         resetTable();
         updateTable(pcComp);
+    }
+    
+    private void openTable(){
+        DefaultTableModel mdlMain = (DefaultTableModel) tblMain.getModel();
+        
     }
     
     private void resetData(){   //Resets all global values to default
