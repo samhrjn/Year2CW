@@ -6,7 +6,7 @@
 package PCPart;
 
 import java.util.ArrayList;
-
+import java.awt.Desktop;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
@@ -31,7 +31,7 @@ public class Interface extends javax.swing.JFrame {
     private void initComponents() {
 
         bgrpWarn = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
+        panelTop = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         panelLeft = new javax.swing.JPanel();
         lblComName = new javax.swing.JLabel();
@@ -55,7 +55,6 @@ public class Interface extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         cmbProdTypeSearch = new javax.swing.JComboBox<>();
         btnDelete = new javax.swing.JButton();
-        lblSearch = new javax.swing.JLabel();
         btnComSearch = new javax.swing.JButton();
         btnProdTypeSearch = new javax.swing.JButton();
         btnPriceSearch = new javax.swing.JButton();
@@ -63,32 +62,37 @@ public class Interface extends javax.swing.JFrame {
         tblMain = new javax.swing.JTable();
         btnProdName = new javax.swing.JButton();
         btnQuan = new javax.swing.JButton();
+        lblSearchTxt = new javax.swing.JLabel();
+        lblSearch = new javax.swing.JLabel();
+        lblEmpty = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         mitmFile = new javax.swing.JMenuItem();
         mitmExit = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
+        mitmHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PC Part Information System");
+        setSize(new java.awt.Dimension(930, 601));
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("PC Part Information System");
+        lblTitle.setText("PC Parts Information System");
         lblTitle.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelTopLayout = new javax.swing.GroupLayout(panelTop);
+        panelTop.setLayout(panelTopLayout);
+        panelTopLayout.setHorizontalGroup(
+            panelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTopLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelTopLayout.setVerticalGroup(
+            panelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTopLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -222,10 +226,6 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
-        lblSearch.setDisplayedMnemonic(' ');
-        lblSearch.setText("Search By :");
-        lblSearch.setMaximumSize(new java.awt.Dimension(60, 14));
-
         btnComSearch.setText("Company");
         btnComSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,6 +289,12 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        lblSearchTxt.setText("Search :");
+
+        lblSearch.setText("Search By :");
+
+        lblEmpty.setText("              ");
+
         javax.swing.GroupLayout panelRightLayout = new javax.swing.GroupLayout(panelRight);
         panelRight.setLayout(panelRightLayout);
         panelRightLayout.setHorizontalGroup(
@@ -298,43 +304,53 @@ public class Interface extends javax.swing.JFrame {
                 .addGroup(panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(panelRightLayout.createSequentialGroup()
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbProdTypeSearch, 0, 220, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelRightLayout.createSequentialGroup()
+                                .addComponent(lblSearch)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnComSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnProdTypeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelRightLayout.createSequentialGroup()
+                                .addComponent(lblSearchTxt)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtSearch)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelRightLayout.createSequentialGroup()
+                                .addComponent(btnProdName, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnQuan, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbProdTypeSearch, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPriceSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
                     .addGroup(panelRightLayout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnComSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnProdTypeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnProdName, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnQuan, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPriceSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblEmpty)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelRightLayout.setVerticalGroup(
             panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRightLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(31, 31, 31)
                 .addGroup(panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbProdTypeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSearchTxt))
                 .addGap(18, 18, 18)
+                .addComponent(lblEmpty)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnComSearch)
-                    .addComponent(btnProdTypeSearch)
-                    .addComponent(btnProdName)
-                    .addComponent(btnQuan)
-                    .addComponent(btnPriceSearch))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(btnComSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProdTypeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProdName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnQuan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSearch)
+                    .addComponent(btnPriceSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -360,6 +376,16 @@ public class Interface extends javax.swing.JFrame {
         menuBar.add(menuFile);
 
         menuHelp.setText("Help");
+
+        mitmHelp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        mitmHelp.setText("Open User Manual");
+        mitmHelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitmHelpActionPerformed(evt);
+            }
+        });
+        menuHelp.add(mitmHelp);
+
         menuBar.add(menuHelp);
 
         setJMenuBar(menuBar);
@@ -371,7 +397,7 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -382,7 +408,7 @@ public class Interface extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -400,67 +426,10 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        //Declaring and assigning values to Strings to be inserted into table
-        try{
-            String comName = txtComName.getText();
-            String prodName = txtProdName.getText();
-            String quan = txtQuan.getText();
-            String price = txtPrice.getText();
-            String prodType = cmbProdType.getSelectedItem().toString();
-            String homeDel;
-            String warrn;
-            
-            //Catch empty text boxes
-            if(comName.equals("")||prodName.equals("")||quan.equals("")||price.equals(""))
-                throw new Exception();
-            
-            //Catch non-number values in numeric fields
-            Double.parseDouble(price);
-            Integer.parseInt(quan);
-            
-            //Catch negative numbers
-            if(Double.parseDouble(price)<0||Integer.parseInt(quan)<0)
-                throw new NullPointerException();
-
-            //Checking result for Radio Button
-            if(rbtnWarStan.isSelected())
-                warrn="Standard";
-            else if(rbtnWarPre.isSelected())
-                warrn="Premium";
-            else
-                throw new Exception();
-        
-            //Checking result for Check Box
-            if(chbxHomeDel.isSelected())
-                homeDel="Eligible";
-            else
-                homeDel="Not Eligible";
-        
-            //Assinging all values into the Table
-        
-            if(!tableSelected){  //If table entry is not selected, add this entry into the array
-                prodNo = String.valueOf(pcComp.size() + 1);
-                pcComp.add(new PCComponent(prodNo, comName, prodType, prodName, warrn, homeDel, quan, price));
-                resetData();
-            }
-            else {               //If table entry is selected, update selected table entry
-                pcComp.set(arrIndex, new PCComponent(prodNo, comName, prodType, prodName, warrn, homeDel, quan, price));
-            }
-            resetTable();
-            updateTable(pcComp);
-        }
-        catch(NumberFormatException e){
-            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null,"Please type a valid number","Non-Numeric Value",0);
-        }
-        catch(NullPointerException e){
-            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null,"Values cannot be Negative","Negative Values",0);
-        }
-        catch(Exception e){
-            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null,"Type All Required Values","Incomplete Values",0);
-        }
+        if (tableImported)  //If table has been imported
+            addData();          //Adds data from the form into the table
+        else
+            JOptionPane.showMessageDialog(null,"Table not Imported","Open File",0);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void tblMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMainMouseClicked
@@ -532,6 +501,80 @@ public class Interface extends javax.swing.JFrame {
         openTable();
     }//GEN-LAST:event_mitmFileActionPerformed
 
+    private void mitmHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitmHelpActionPerformed
+        try {
+            File file=new File("src/main/java/PCPart/User_Manual_for_PC_Parts_Information_System.pdf");
+            Desktop.getDesktop().open(file);            //Opens the file
+        }
+        catch (Exception ex) {                  //If file is missing
+            JOptionPane.showMessageDialog(null, "File not Found", "Open File", 0);
+        }
+    }//GEN-LAST:event_mitmHelpActionPerformed
+
+    private void addData(){                 //Takes the value from the form and adds a row in the table
+        //Declaring and assigning values to Strings to be inserted into table
+        try{
+            String comName = txtComName.getText();
+            String prodName = txtProdName.getText();
+            String quan = txtQuan.getText();
+            String price = txtPrice.getText();
+            String prodType = cmbProdType.getSelectedItem().toString();
+            String homeDel;
+            String warrn;
+            
+            //Catch empty text boxes
+            if(comName.equals("")||prodName.equals("")||quan.equals("")||price.equals(""))
+                throw new Exception();
+            
+            //Catch non-number values in numeric fields
+            Double.parseDouble(price);
+            Integer.parseInt(quan);
+            
+            //Catch negative numbers
+            if(Double.parseDouble(price)<0||Integer.parseInt(quan)<0)
+                throw new NullPointerException();
+
+            //Checking result for Radio Button
+            if(rbtnWarStan.isSelected())
+                warrn="Standard";
+            else if(rbtnWarPre.isSelected())
+                warrn="Premium";
+            else
+                throw new Exception();
+        
+            //Checking result for Check Box
+            if(chbxHomeDel.isSelected())
+                homeDel="Eligible";
+            else
+                homeDel="Not Eligible";
+        
+            //Assinging all values into the Table
+        
+            if(!tableSelected){  //If table entry is not selected, add this entry into the array
+                prodNo = String.valueOf(pcComp.size() + 1);
+                pcComp.add(new PCComponent(prodNo, comName, prodType, prodName, warrn, homeDel, quan, price));
+                resetData();
+            }
+            else {               //If table entry is selected, update selected table entry
+                pcComp.set(arrIndex, new PCComponent(prodNo, comName, prodType, prodName, warrn, homeDel, quan, price));
+            }
+            resetTable();
+            updateTable(pcComp);
+        }
+        catch(NumberFormatException e){
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null,"Please type a valid number","Non-Numeric Value",0);
+        }
+        catch(NullPointerException e){
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null,"Values cannot be Negative","Negative Values",0);
+        }
+        catch(Exception e){
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null,"Type All Required Values","Incomplete Values",0);
+        }
+    }
+    
     private void searchLinear(int searchCol){           //Linear Search through the table for text value
         String searchResult = " Matched Results:\n\n";
         int total = 0;
@@ -541,7 +584,7 @@ public class Interface extends javax.swing.JFrame {
                 if(searchCol==2){                                                               //For checking Combo box search
                     if(cmbProdTypeSearch.getSelectedItem().toString().contains(tblMain.getValueAt(i,searchCol).toString())){    //If the ProdType column in table contains the same value as the one chosen in the combo box
                         total++;
-                        searchResult += String.valueOf(total) + ". " +                                  //Add values to string for:
+                        searchResult += String.valueOf(total) + ". " +                          //Add values to string for:
                             String.valueOf(tblMain.getValueAt(i, 1)) + " " +                        //Company
                             String.valueOf(tblMain.getValueAt(i, 3)) + ", " +                       //Prod Name
                             String.valueOf(tblMain.getValueAt(i, 4)) + " Warranty, " +              //Warranty
@@ -554,7 +597,7 @@ public class Interface extends javax.swing.JFrame {
                         throw new NullPointerException();
                     else if(txtSearch.getText().contains(tblMain.getValueAt(i,searchCol).toString())){                           //If required column in the table contains same value as the one in the text field
                         total++;
-                        searchResult += String.valueOf(total) + ". " +                                  //Add values to string for:
+                        searchResult += String.valueOf(total) + ". " +                          //Add values to string for:
                             String.valueOf(tblMain.getValueAt(i, 1)) + " " +                        //Company
                             String.valueOf(tblMain.getValueAt(i, 3)) + ", " +                       //Prod Name
                             String.valueOf(tblMain.getValueAt(i, 4)) + " Warranty, " +              //Warranty
@@ -564,9 +607,9 @@ public class Interface extends javax.swing.JFrame {
                 }
             }
             if(total>0)
-                JOptionPane.showMessageDialog(null,total + searchResult, "Search",1);
+                JOptionPane.showMessageDialog(null,total + searchResult, "Search Results",1);
             else
-                JOptionPane.showMessageDialog(null, "No Results Found", "Search",0);
+                JOptionPane.showMessageDialog(null, "No Results Found", "Search Results",0);
         }
         catch (NullPointerException e){
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
@@ -576,20 +619,21 @@ public class Interface extends javax.swing.JFrame {
     
     private void searchBinary(boolean isPrice){         //Calls binSearch() to binary search through the table
         String searchQuery = txtSearch.getText();
-        sort(isPrice);                                  //Sorts the table by the required column, by price if isPrice is true, by quantity if false
         
         if(searchQuery.equals(""))
             JOptionPane.showMessageDialog(null, "Please type a search query", "Empty Search Box", 0);
         
         else{
+            sort(isPrice);                                  //Sorts the table by the required column, by price if isPrice is true, by quantity if false
+            
             double searchValue = Double.parseDouble(searchQuery);                                   //Parse Number to be searched
             PCComponent temp = bs.binSearch(pcComp, 0, pcComp.size()-1, searchValue, isPrice);      //Calls binSearch() and stores the first result in temp
             
             if (temp==null)                             //If no results found
-                JOptionPane.showMessageDialog(null, "No Such Entry Found", "Search Results", 1);
+                JOptionPane.showMessageDialog(null, "No Such Entry Found", "Search Results", 0);
             
             else                                        //Output the first result
-                JOptionPane.showMessageDialog(null, "First Entry:\n\n" +
+                JOptionPane.showMessageDialog(null, "First Result:\n\n" +
                                                     temp.comName + " " +
                                                     temp.prodName + "\n" +
                                                     temp.warrn + " Warranty\n" +
@@ -598,12 +642,12 @@ public class Interface extends javax.swing.JFrame {
         }
     }
     
-    public void sort(boolean sortPrice){                //Merge sort the table by the given row
+    private void sort(boolean sortPrice){                //Sort the table by the given row using selection sort
         PCComponent tempData;
         
         for(int i=0; i<pcComp.size(); i++){
             for(int j=1; j<pcComp.size(); j++){
-                PCComponent first = pcComp.get(j),      //Divide the array into two parts
+                PCComponent first = pcComp.get(j),
                             second = pcComp.get(j-1);
                 
                 if(sortPrice){                  //Sorting Price
@@ -627,58 +671,63 @@ public class Interface extends javax.swing.JFrame {
     }
     
     private void openTable(){                           //Reads from an external file and imports data into table
-        String filePath = "src\\main\\java\\PCPart\\data.txt";      //Read the external file
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
-            String line,    prodNo = new String(),
-                            comName = new String(),
-                            prodType = new String(),
-                            prodName = new String(),
-                            warrn = new String(),
-                            homeDel = new String(),
-                            quan = new String(),
-                            price;
-            while ((line = br.readLine()) != null){                 //While buffered text is not completed
-                String[] data = line.split(",");
+        String filePath = "src/main/java/PCPart/data.txt";      //Read the external file
+        if (tableImported)              //If table is already imported
+            JOptionPane.showMessageDialog(null,"Table already Imported","Open File",0);
+        else{
+            try{
+                BufferedReader br = new BufferedReader(new FileReader(filePath));
+                String line,    prodNo = new String(),
+                                comName = new String(),
+                                prodType = new String(),
+                                prodName = new String(),
+                                warrn = new String(),
+                                homeDel = new String(),
+                                quan = new String(),
+                                price;
+                while ((line = br.readLine()) != null){                 //While buffered text is not completed
+                    String[] data = line.split(",");
                                        
-                for (int i=0; i<data.length; i++){                  //For every entry in data array
+                    for (int i=0; i<data.length; i++){                  //For every entry in data array
                     
-                    switch (i % 8) {                                //Assigns value of current index in data to correct variable
-                        case 0:                                     //if(i%8==0)
-                            prodNo = data[i];
-                            break;
-                        case 1:                                     //if(i%8==1)
-                            comName = data[i];
-                            break;
-                        case 2:                                     //if(i%8==2)
-                            prodType = data[i];
-                            break;
-                        case 3:                                     //if(i%8==3)
-                            prodName = data[i];
-                            break;
-                        case 4:                                     //if(i%8==4)
-                            warrn = data[i];
-                            break;
-                        case 5:                                     //if(i%8==5)
-                            homeDel = data[i];
-                            break;
-                        case 6:                                     //if(i%8==6)
-                            quan = data[i];
-                            break;
-                        case 7:                                     //if(i%8==7)
-                            price = data[i];
-                            pcComp.add(new PCComponent(prodNo, comName, prodType, prodName, warrn, homeDel, quan, price));  //Assigns correct data to pcComp and creats new row on table
+                        switch (i % 8) {                                //Assigns value of current index in data to correct variable
+                            case 0:                                     //if(i%8==0)
+                                prodNo = data[i];
+                                break;
+                            case 1:                                     //if(i%8==1)
+                                comName = data[i];
+                                break;
+                            case 2:                                     //if(i%8==2)
+                                prodType = data[i];
+                                break;
+                            case 3:                                     //if(i%8==3)
+                                prodName = data[i];
+                                break;
+                            case 4:                                     //if(i%8==4)
+                                warrn = data[i];
+                                break;
+                            case 5:                                     //if(i%8==5)
+                                homeDel = data[i];
+                                break;
+                            case 6:                                     //if(i%8==6)
+                                quan = data[i];
+                                break;
+                            case 7:                                     //if(i%8==7)
+                                price = data[i];
+                                pcComp.add(new PCComponent(prodNo, comName, prodType, prodName, warrn, homeDel, quan, price));  //Assigns correct data to pcComp and creats new row on table
+                        }
                     }
                 }
+                resetData();
+                updateTable(pcComp);
             }
-            resetData();
-            updateTable(pcComp);
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
+            catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+            catch (IOException e){
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
+            }
+            tableImported = true;
         }
     }
     
@@ -701,7 +750,7 @@ public class Interface extends javax.swing.JFrame {
         arrIndex=-1;
     }
     
-    private void resetTable(){          //Resets the table
+    private void resetTable(){          //Clears the table
         DefaultTableModel mdlMain = (DefaultTableModel) tblMain.getModel();
         int rowNo = mdlMain.getRowCount();
         for(int i=0;i<rowNo;i++)
@@ -717,12 +766,16 @@ public class Interface extends javax.swing.JFrame {
             mdlMain.addRow(obj);
         }
     }
-
+    
+    //Variables that need to be changed and reset multiple times
     private ArrayList<PCComponent> pcComp = new ArrayList<>();      //Array containing all table data
     private boolean tableSelected = false;                          //Is an entry on table selected? If yes, this is used to change add button to update button
     private String prodNo;                                          //Product No. variable for array
     private int arrIndex=-1;                                        //Currently selected array index in table
     private BinSearch bs = new BinSearch();                         //Create an object of class BinSearch for Binary Search
+    
+    //Variables that need to change only once
+    private boolean tableImported = false;                          //Changes to true when the file is opened
     
     //-------------------------------END OF MAIN CODE-------------------------------//
     
@@ -773,14 +826,15 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbxHomeDel;
     private javax.swing.JComboBox<String> cmbProdType;
     private javax.swing.JComboBox<String> cmbProdTypeSearch;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblComName;
+    private javax.swing.JLabel lblEmpty;
     private javax.swing.JLabel lblHomeDel;
     private javax.swing.JLabel lblPrice;
     private javax.swing.JLabel lblProdName;
     private javax.swing.JLabel lblProdType;
     private javax.swing.JLabel lblSearch;
+    private javax.swing.JLabel lblSearchTxt;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblWarn;
     private javax.swing.JLabel lblWuan;
@@ -789,8 +843,10 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem mitmExit;
     private javax.swing.JMenuItem mitmFile;
+    private javax.swing.JMenuItem mitmHelp;
     private javax.swing.JPanel panelLeft;
     private javax.swing.JPanel panelRight;
+    private javax.swing.JPanel panelTop;
     private javax.swing.JRadioButton rbtnWarPre;
     private javax.swing.JRadioButton rbtnWarStan;
     private javax.swing.JTable tblMain;
