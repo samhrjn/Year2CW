@@ -11,7 +11,8 @@ package PCPart;
  */
 public class PCComponent {
     public String prodNo, comName, prodType, prodName, warrn, homeDel, quan, price;
-
+    
+                    //Accepts values for the respective string and assigns them
     public PCComponent(String prodNo, String comName, String prodType, String prodName, String warrn, String homeDel, String quan, String price){
         this.prodNo = prodNo;
         this.comName = comName;

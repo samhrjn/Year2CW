@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.io.*;
+import java.util.logging.*;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -63,7 +65,7 @@ public class Interface extends javax.swing.JFrame {
         btnQuan = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mitmFile = new javax.swing.JMenuItem();
         mitmExit = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
 
@@ -118,12 +120,6 @@ public class Interface extends javax.swing.JFrame {
         chbxHomeDel.setText("Eligible for Home Delivery");
 
         lblPrice.setText("Price");
-
-        txtPrice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPriceActionPerformed(evt);
-            }
-        });
 
         btnAdd.setText("ADD");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -216,11 +212,6 @@ public class Interface extends javax.swing.JFrame {
         panelRight.setBackground(new java.awt.Color(255, 255, 255));
 
         txtSearch.setToolTipText("");
-        txtSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchActionPerformed(evt);
-            }
-        });
 
         cmbProdTypeSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPU", "Motherboard", "Memory", "Graphics Card", "Storage", "Case", "Power Supply", "Cooler", "Monitor" }));
 
@@ -272,8 +263,8 @@ public class Interface extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tblMain.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tblMain.setShowGrid(false);
+        tblMain.getTableHeader().setReorderingAllowed(false);
         tblMain.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblMainMouseClicked(evt);
@@ -350,8 +341,13 @@ public class Interface extends javax.swing.JFrame {
 
         menuFile.setText("File");
 
-        jMenuItem1.setText("jMenuItem1");
-        menuFile.add(jMenuItem1);
+        mitmFile.setText("Open File");
+        mitmFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mitmFileActionPerformed(evt);
+            }
+        });
+        menuFile.add(mitmFile);
 
         mitmExit.setText("Exit");
         mitmExit.addActionListener(new java.awt.event.ActionListener() {
@@ -402,14 +398,6 @@ public class Interface extends javax.swing.JFrame {
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         resetData();     //Clears all values in fields, as well as reset global values to default
     }//GEN-LAST:event_btnClearActionPerformed
-
-    private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchActionPerformed
-
-    private void txtPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPriceActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         //Declaring and assigning values to Strings to be inserted into table
@@ -462,12 +450,15 @@ public class Interface extends javax.swing.JFrame {
             updateTable(pcComp);
         }
         catch(NumberFormatException e){
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null,"Please type a valid number","Non-Numeric Value",0);
         }
         catch(NullPointerException e){
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null,"Values cannot be Negative","Negative Values",0);
         }
         catch(Exception e){
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null,"Type All Required Values","Incomplete Values",0);
         }
     }//GEN-LAST:event_btnAddActionPerformed
@@ -537,7 +528,11 @@ public class Interface extends javax.swing.JFrame {
         System.exit(0);     //Close the Program
     }//GEN-LAST:event_mitmExitActionPerformed
 
-    private void searchLinear(int searchCol){
+    private void mitmFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitmFileActionPerformed
+        openTable();
+    }//GEN-LAST:event_mitmFileActionPerformed
+
+    private void searchLinear(int searchCol){           //Linear Search through the table for text value
         String searchResult = " Matched Results:\n\n";
         int total = 0;
         
@@ -574,46 +569,51 @@ public class Interface extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No Results Found", "Search",0);
         }
         catch (NullPointerException e){
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Please type a search query", "Empty Search Box", 0);
         }
     }
     
-    private void searchBinary(boolean isPrice){
+    private void searchBinary(boolean isPrice){         //Calls binSearch() to binary search through the table
         String searchQuery = txtSearch.getText();
-        sort(isPrice);
+        sort(isPrice);                                  //Sorts the table by the required column, by price if isPrice is true, by quantity if false
+        
         if(searchQuery.equals(""))
             JOptionPane.showMessageDialog(null, "Please type a search query", "Empty Search Box", 0);
+        
         else{
-            double searchPrice = Double.parseDouble(searchQuery);
-            PCComponent temp = bs.binSearch(pcComp, 0, pcComp.size()-1, searchPrice, isPrice);
-            if (temp==null)
+            double searchValue = Double.parseDouble(searchQuery);                                   //Parse Number to be searched
+            PCComponent temp = bs.binSearch(pcComp, 0, pcComp.size()-1, searchValue, isPrice);      //Calls binSearch() and stores the first result in temp
+            
+            if (temp==null)                             //If no results found
                 JOptionPane.showMessageDialog(null, "No Such Entry Found", "Search Results", 1);
-            else
-                JOptionPane.showMessageDialog(null, "First Entry:\n" +
+            
+            else                                        //Output the first result
+                JOptionPane.showMessageDialog(null, "First Entry:\n\n" +
                                                     temp.comName + " " +
-                                                    temp.prodName + ", " +
-                                                    temp.warrn + " Warranty, " +
-                                                    temp.homeDel + " for Home Delivery, Price: " +
+                                                    temp.prodName + "\n" +
+                                                    temp.warrn + " Warranty\n" +
+                                                    temp.homeDel + " for Home Delivery\nPrice: " +
                                                     temp.price, "Search Results", 1);
         }
     }
     
-    public void sort(boolean sortPrice){
+    public void sort(boolean sortPrice){                //Merge sort the table by the given row
         PCComponent tempData;
         
         for(int i=0; i<pcComp.size(); i++){
             for(int j=1; j<pcComp.size(); j++){
-                PCComponent first = pcComp.get(j),
+                PCComponent first = pcComp.get(j),      //Divide the array into two parts
                             second = pcComp.get(j-1);
                 
-                if(sortPrice){
+                if(sortPrice){                  //Sorting Price
                     if(Double.parseDouble(first.price) < Double.parseDouble(second.price)){
                         tempData = pcComp.get(j);
                         pcComp.set(j, pcComp.get(j-1));
                         pcComp.set(j-1, tempData);
                     }
                 }
-                else{
+                else{                           //Sorting Quantity
                     if(Integer.parseInt(first.quan) < Integer.parseInt(second.quan)){
                         tempData = pcComp.get(j);
                         pcComp.set(j, pcComp.get(j-1));
@@ -626,9 +626,60 @@ public class Interface extends javax.swing.JFrame {
         updateTable(pcComp);
     }
     
-    private void openTable(){
-        DefaultTableModel mdlMain = (DefaultTableModel) tblMain.getModel();
-        
+    private void openTable(){                           //Reads from an external file and imports data into table
+        String filePath = "src\\main\\java\\PCPart\\data.txt";      //Read the external file
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            String line,    prodNo = new String(),
+                            comName = new String(),
+                            prodType = new String(),
+                            prodName = new String(),
+                            warrn = new String(),
+                            homeDel = new String(),
+                            quan = new String(),
+                            price;
+            while ((line = br.readLine()) != null){                 //While buffered text is not completed
+                String[] data = line.split(",");
+                                       
+                for (int i=0; i<data.length; i++){                  //For every entry in data array
+                    
+                    switch (i % 8) {                                //Assigns value of current index in data to correct variable
+                        case 0:                                     //if(i%8==0)
+                            prodNo = data[i];
+                            break;
+                        case 1:                                     //if(i%8==1)
+                            comName = data[i];
+                            break;
+                        case 2:                                     //if(i%8==2)
+                            prodType = data[i];
+                            break;
+                        case 3:                                     //if(i%8==3)
+                            prodName = data[i];
+                            break;
+                        case 4:                                     //if(i%8==4)
+                            warrn = data[i];
+                            break;
+                        case 5:                                     //if(i%8==5)
+                            homeDel = data[i];
+                            break;
+                        case 6:                                     //if(i%8==6)
+                            quan = data[i];
+                            break;
+                        case 7:                                     //if(i%8==7)
+                            price = data[i];
+                            pcComp.add(new PCComponent(prodNo, comName, prodType, prodName, warrn, homeDel, quan, price));  //Assigns correct data to pcComp and creats new row on table
+                    }
+                }
+            }
+            resetData();
+            updateTable(pcComp);
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
     
     private void resetData(){   //Resets all global values to default
@@ -650,7 +701,7 @@ public class Interface extends javax.swing.JFrame {
         arrIndex=-1;
     }
     
-    private void resetTable(){
+    private void resetTable(){          //Resets the table
         DefaultTableModel mdlMain = (DefaultTableModel) tblMain.getModel();
         int rowNo = mdlMain.getRowCount();
         for(int i=0;i<rowNo;i++)
@@ -722,7 +773,6 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbxHomeDel;
     private javax.swing.JComboBox<String> cmbProdType;
     private javax.swing.JComboBox<String> cmbProdTypeSearch;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblComName;
@@ -738,6 +788,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem mitmExit;
+    private javax.swing.JMenuItem mitmFile;
     private javax.swing.JPanel panelLeft;
     private javax.swing.JPanel panelRight;
     private javax.swing.JRadioButton rbtnWarPre;
