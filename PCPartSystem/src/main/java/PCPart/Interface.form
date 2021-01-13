@@ -52,7 +52,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="PC Part Information System"/>
+    <Property name="title" type="java.lang.String" value="PC Parts Information System"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[930, 601]"/>
     </Property>

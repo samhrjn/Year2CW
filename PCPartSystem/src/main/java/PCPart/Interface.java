@@ -73,7 +73,7 @@ public class Interface extends javax.swing.JFrame {
         mitmHelp = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PC Part Information System");
+        setTitle("PC Parts Information System");
         setSize(new java.awt.Dimension(930, 601));
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
