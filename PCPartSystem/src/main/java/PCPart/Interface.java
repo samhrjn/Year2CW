@@ -498,7 +498,7 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_mitmExitActionPerformed
 
     private void mitmFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitmFileActionPerformed
-        openTable();
+        openTable();        //Opens the External file
     }//GEN-LAST:event_mitmFileActionPerformed
 
     private void mitmHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitmHelpActionPerformed
@@ -571,7 +571,7 @@ public class Interface extends javax.swing.JFrame {
         }
         catch(Exception e){
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null,"Type All the Required Values","Incomplete Values",0);
+            JOptionPane.showMessageDialog(null,"Type all the Required Values","Incomplete Values",0);
         }
     }
     
