@@ -429,7 +429,7 @@ public class Interface extends javax.swing.JFrame {
         if (tableImported)  //If table has been imported
             addData();          //Adds data from the form into the table
         else
-            JOptionPane.showMessageDialog(null,"Table not Imported","Open File",0);
+            JOptionPane.showMessageDialog(null,"Table is not Imported yet","Open File",0);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void tblMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMainMouseClicked
@@ -571,7 +571,7 @@ public class Interface extends javax.swing.JFrame {
         }
         catch(Exception e){
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null,"Type All Required Values","Incomplete Values",0);
+            JOptionPane.showMessageDialog(null,"Type All the Required Values","Incomplete Values",0);
         }
     }
     
@@ -633,7 +633,7 @@ public class Interface extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No Such Entry Found", "Search Results", 0);
             
             else                                        //Output the first result
-                JOptionPane.showMessageDialog(null, "First Result:\n\n" +
+                JOptionPane.showMessageDialog(null, "Search Result:\n\n" +
                                                     temp.comName + " " +
                                                     temp.prodName + "\n" +
                                                     temp.warrn + " Warranty\n" +
@@ -673,7 +673,7 @@ public class Interface extends javax.swing.JFrame {
     private void openTable(){                           //Reads from an external file and imports data into table
         String filePath = "src/main/java/PCPart/data.txt";      //Read the external file
         if (tableImported)              //If table is already imported
-            JOptionPane.showMessageDialog(null,"Table already Imported","Open File",0);
+            JOptionPane.showMessageDialog(null,"Table has already been Imported","Open File",0);
         else{
             try{
                 BufferedReader br = new BufferedReader(new FileReader(filePath));
